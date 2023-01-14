@@ -67,7 +67,7 @@ local drop = tab2:AddDropdown("Select", function(opt)
     array.targ = array.npcs[opt]
 end)
 
-btn = tab2:AddButton("Start", function()
+btn = tab1:AddButton("Start", function()
     if not array.autofarm then
         if key then
             btn.Text, array.autofarm = "Stop", true
@@ -90,14 +90,22 @@ local function format(number)
 end
 
 labels = setmetatable({
-    text = {label = tab2:AddLabel("")},
-    tfarm = {label = tab2:AddLabel("")},
+    text = {label = tab1:AddLabel("")},
+    tfarm = {label = tab1:AddLabel("")},
     space = {label = tab2:AddLabel("")},
-    Quest = {prefix = "Current Quest: ", label = tab1:AddLabel("Current Quest: None")},
+    --Quest = {prefix = "Current Quest: ", label = tab1:AddLabel("Current Quest: None")},
     Yen = {prefix = "Yen: ", label = tab1:AddLabel("Yen: 0"), value = 0, oldval = player.PlayerFolder.Stats.Yen.Value},
     RC = {prefix = "RC: ", label = tab1:AddLabel("RC: 0"), value = 0, oldval = player.PlayerFolder.Stats.RC.Value},
     REP = {prefix = "REP: ", label = tab1:AddLabel("REP: 0"), value = 0, oldval = player.PlayerFolder.Stats.Reputation.Value},
-    Kills = {prefix = "Kills: ", label = tab1:AddLabel("Kills: 0"), value = 0} 
+    GyakusatsuSacs = {prefix = "Sacs: ", label = tab1:AddLabel("SACS: 0"), value = 0, oldval = player.PlayerFolder.Inventory.GyaSacs},
+    --Kills = {prefix = "Kills: ", label = tab1:AddLabel("Kills: 0"), value = 0} 
+    text2 = {label = tab1:AddLabel("Boss Kills | WIP")},
+    if player.PlayerFolder.Stats.Level.Value <= 2000 then {
+        LevelsGained = {prefix = "Levels: ", label = tab1:AddLabel("Levels: 0"), value = 0, oldval = player.PlayerFolder.Stats.Level.Value}
+    }
+    --AmonKills = {prefix = "AMON: ", label = tab1:AddLabel("Kills: 0"), value = 0, oldval = player.PlayerFolder.BossKills, "Koutaru Amon"},
+    --AmonKills = {prefix = "AMON: ", label = tab1:AddLabel("Kills: 0"), value = 0, oldval = player.PlayerFolder.BossKills, "Koutaru Amon"},
+    --EtoKills = {prefix = "ETO: ", label = tab1:AddLabel("ETO: 0"), value = 0, oldval = player.PlayerFolder.BossKills, "Eto Yoshimura"},
 }, {
     __call = function (self, typ, newv, oldv)
         if typ and newv then
@@ -396,6 +404,18 @@ end)
 player.PlayerFolder.Stats.Yen.Changed:Connect(function(value)
     if array.autofarm then
         labels("Yen", value - labels.Yen.oldval, value)
+    end
+end)
+
+player.PlayerFolder.Stats.Level.Changed:Connect(function(value)
+    if array.autofarm then
+        labels("Level", value - labels.LevelsGained.oldval, value)
+    end
+end)
+
+player.PlayerFolder.Inventory.GyaSacs.Changed:Connect(function(value)
+    if array.autofarm then
+        labels("SACS", value - labels.GyakusatsuSacs.oldval, value)
     end
 end)
 
