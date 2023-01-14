@@ -100,7 +100,7 @@ labels = setmetatable({
     GyakusatsuSacs = {prefix = "Sacs: ", label = tab1:AddLabel("SACS: 0"), value = 0, oldval = player.PlayerFolder.Inventory.GyaSacs},
     --Kills = {prefix = "Kills: ", label = tab1:AddLabel("Kills: 0"), value = 0} 
     text2 = {label = tab1:AddLabel("Boss Kills | WIP")},
-    if player.PlayerFolder.Stats.Level.Value <= 2000 then {
+    if(player.PlayerFolder.Stats.Level.Value <= 2000) then {
         LevelsGained = {prefix = "Levels: ", label = tab1:AddLabel("Levels: 0"), value = 0, oldval = player.PlayerFolder.Stats.Level.Value}
     }
     --AmonKills = {prefix = "AMON: ", label = tab1:AddLabel("Kills: 0"), value = 0, oldval = player.PlayerFolder.BossKills, "Koutaru Amon"},
